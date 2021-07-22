@@ -3,6 +3,7 @@ import React from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import globalStyles from '../styles/globalStyles';
 import * as yup from 'yup';
+import FlatButton from '../shared/Button';
 
 
 const ReviewSchema=yup.object({
@@ -37,22 +38,30 @@ const ReviewForm = ({addReview}) => {
                         placeholder='Review Title'
                         onChangeText={props.handleChange('title')}
                         value={props.values.title}
+                        onBlur={props.handleBlur('title')}
                         />
+                        <Text style={styles.errorText}>{props.touched.title && props.errors.title}</Text>
                         <TextInput
                         style={styles.input}
                         placeholder='Review Body'
                         onChangeText={props.handleChange('body')}
                         value={props.values.body}
                         multiline
+                        minHeight={60}
+                        onBlur={props.handleBlur('body')}
                         />
+                        <Text style={styles.errorText}>{props.touched.body && props.errors.body}</Text>
                         <TextInput
                         style={styles.input}
                         placeholder='Rating (1-5)'
                         onChangeText={props.handleChange('rating')}
                         value={props.values.rating}
                         keyboardType='numeric'
+                        onBlur={props.handleBlur('rating')}
                         />
-                        <Button title='submit' color='maroon' onPress={props.handleSubmit} />
+                        <Text style={styles.errorText}>{props.touched.rating && props.errors.rating}</Text>
+                        {/* <Button title='submit' color='maroon' onPress={props.handleSubmit} /> */}
+                        <FlatButton text='submit' onPress={props.handleSubmit} />
                     </View>
                 )}
             </Formik>
@@ -71,5 +80,12 @@ const styles = StyleSheet.create({
         borderWidth:1,
         width:319,
         marginVertical:20
+    },
+    errorText:{
+        color:'crimson',
+        marginTop:3,
+        marginBottom:5,
+        textAlign:'center',
+        fontWeight:'bold'
     }
 })
